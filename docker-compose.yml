@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  app:
+    build: ./docker/python
+    volumes:
+      - .:/workspace
+    ports:
+      - 8002:8000
+    environment:
+      - WATCHFILES_FORCE_POLLING=true
+
+  db:
+    build: ./docker/mysql
+    container_name: mysql
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql-django:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+
+  minio:
+    build: ./docker/minio
+    container_name: minio
+    environment:
+      - MINIO_ROOT_USER=rootroot
+      - MINIO_ROOT_PASSWORD=secretsecret
+    ports:
+      - 9000:9000
+      - 9001:9001
+    command: server --console-address ":9001" /data
+    volumes:
+      - ./docker/minio/data:/data
+
+  mailhog:
+    container_name: mailhog
+    build: ./docker/mailhog
+    ports:
+      - 8025:8025
+    environment:
+      MH_STORAGE: maildir
+      MH_MAILDIR_PATH: /tmp
+    volumes:
+      # メールデータ
+      - ./docker/mailhog/maildir:/tmp
+
+volumes:
+  mysql-django:
