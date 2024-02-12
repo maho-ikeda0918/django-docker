@@ -120,7 +120,7 @@ docker compose up -d
 
 Djangoの画面が表示されれば起動成功です。
 
-![http://localhost:8002](http://localhost:8002)
+「http://localhost:8002」
 
 
 ### コンテナの停止&削除
