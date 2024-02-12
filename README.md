@@ -1,4 +1,9 @@
 # Django環境構築
+## 1. 環境変数の準備
+
+`.env.sample`をコピー&名前変更して`.env`を作成します。
+
+お好みで`.env`にデータベースへの接続情報を記載してください。
 
 **※注意①**
 
@@ -120,7 +125,7 @@ docker compose up -d
 
 Djangoの画面が表示されれば起動成功です。
 
-「http://localhost:8002」
+<div>http://localhost:8002</div>
 
 
 ### コンテナの停止&削除
