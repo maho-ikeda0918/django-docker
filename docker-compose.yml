@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   web:
+    container_name: nginx
     build: ./docker/nginx
     ports:
       - 8000:8000
@@ -14,11 +15,10 @@ services:
 
   app:
     build: ./docker/python
+    container_name: django
     command: uwsgi --socket :8001 --module app.wsgi --py-autoreload 1 --logto /tmp/tmp.log
     volumes:
       - .:/workspace
-    # ports:
-    #   - 8001:8000
     expose:
       - "8001"
     depends_on:
@@ -41,30 +41,30 @@ services:
     ports:
       - 3306:3306
 
-  # minio:
-  #   build: ./docker/minio
-  #   container_name: minio
-  #   environment:
-  #     - MINIO_ROOT_USER=rootroot
-  #     - MINIO_ROOT_PASSWORD=secretsecret
-  #   ports:
-  #     - 9000:9000
-  #     - 9001:9001
-  #   command: server --console-address ":9001" /data
-  #   volumes:
-  #     - ./docker/minio/data:/data
+  minio:
+    build: ./docker/minio
+    container_name: minio
+    environment:
+      - MINIO_ROOT_USER=rootroot
+      - MINIO_ROOT_PASSWORD=secretsecret
+    ports:
+      - 9000:9000
+      - 9001:9001
+    command: server --console-address ":9001" /data
+    volumes:
+      - ./docker/minio/data:/data
 
-  # mailhog:
-  #   container_name: mailhog
-  #   build: ./docker/mailhog
-  #   ports:
-  #     - 8025:8025
-  #   environment:
-  #     MH_STORAGE: maildir
-  #     MH_MAILDIR_PATH: /tmp
-  #   volumes:
-  #     # メールデータ
-  #     - ./docker/mailhog/maildir:/tmp
+  mailhog:
+    container_name: mailhog
+    build: ./docker/mailhog
+    ports:
+      - 8025:8025
+    environment:
+      MH_STORAGE: maildir
+      MH_MAILDIR_PATH: /tmp
+    volumes:
+      # メールデータ
+      - ./docker/mailhog/maildir:/tmp
 
 volumes:
   db-store:
