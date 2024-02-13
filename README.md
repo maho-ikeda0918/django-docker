@@ -25,7 +25,7 @@
 まずはパッケージ管理ツールのインストールをします。
 
 ```bash
-docker compose run --rm --entrypoint "poetry init --name app --dependency django --dependency mysqlclient" app
+docker compose run --rm --entrypoint "poetry init --name app --dependency django --dependency mysqlclient --dependency uwsgi" app
 ```
 
 コマンドを実行すると、色々聞かれるので、以下に倣って入力します。

@@ -1,18 +1,9 @@
-FROM python:3.12-bullseye
+FROM python:3.9.5
 
-# pythonの出力表示をDocker用に調整
-ENV PYTHONUNBUFFERD=1
-
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /workspace
 WORKDIR /workspace
-
-RUN pip install poetry
-
-# poetryの定義ファイルをコピー（存在する場合）
-COPY pyproject.toml* poetry.lock* ./
-
-# venvのファイルをプロジェクトディレクトリの下に置く（全てのプロジェクトに適用するように）
-RUN poetry config virtualenvs.in-project true
-RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
-
-# # 開発用サーバー立ち上げ
-ENTRYPOINT ["poetry", "run", "python", "project/manage.py", "runserver", "0.0.0.0:8000"]
+ADD requirements.txt /workspace/
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+ADD . /workspace/
