@@ -8,18 +8,6 @@
 git clone -b django-practice-01 <リモートリポジトリ>
 ```
 
-## 2. .envの準備
-`.env.sample`をコピーして`.env`を作成
-
-.envの中身
-
-```bash
-MYSQL_DATABASE=django
-MYSQL_USER=django
-MYSQL_PASSWORD=secret
-MYSQL_ROOT_PASSWORD=root
-```
-
 ## 2. コンテナを作成&起動
 
 ```bash
