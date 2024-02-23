@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html ang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1 shrink-to-fit=no">
+  <title>記事一覧</title>
+  <link rel="stylesheet" href="{% static 'css/top.css' %}">
+</head>
+
+<header></header>
+
+<body>
+  <h1>お知らせ一覧</h1>
+
+
+<a class="create_button" href="{% url 'info:info_create' %}">新規作成</a><br><br>
+
+{% block content %}
+
+{% for info in info_list%}
+
+{{ info.title }}
+
+{{ info.content }}
+
+{% empty %}
+お知らせがありません。
+{% endfor %}
+
+</body>
+{% endblock %}
+
+
+
+
+</html>
